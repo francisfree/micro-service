@@ -20,7 +20,7 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
     @Before
     public void setUp() {
         createAccountDto = new CreateAccountDto();
-        createAccountDto.setClientId("63894943737");
+        createAccountDto.setClientId(11L);
         createAccountDto.setIban("KE2110001");
         createAccountDto.setBicSwift("ABCLKENA");
 
@@ -47,7 +47,6 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
     public void createAccountFailsWhenInvalidLengths() {
         createAccountDto.setBicSwift(RandomStringUtils.randomAlphabetic(300));
         createAccountDto.setIban(RandomStringUtils.randomAlphabetic(300));
-        createAccountDto.setClientId(RandomStringUtils.randomAlphanumeric(300));
 
         RestAssured
                 .given()
@@ -57,8 +56,7 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
                 .then().log().all()
                 .statusCode(400)
                 .body("messages", containsInAnyOrder("bic Swift size must be between 0 and 250",
-                        "iban size must be between 0 and 250",
-                        "client Id size must be between 0 and 250"));
+                        "iban size must be between 0 and 250"));
     }
 
     @Test
@@ -73,7 +71,7 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
                 .body("accountId", notNullValue())
                 .body("bicSwift", equalTo(createAccountDto.getBicSwift()))
                 .body("iban", equalTo(createAccountDto.getIban()))
-                .body("clientId", equalTo(createAccountDto.getClientId()));
+                .body("client.clientId", equalTo(11));
     }
 
     @Test
@@ -84,7 +82,7 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(updateAccountDto)
-                .put("/accounts/{accountId}", "12002")
+                .put("/accounts/{accountId}", 52)
                 .then().log().all()
                 .statusCode(400)
                 .body(containsString("must not be blank"));
@@ -99,7 +97,7 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(updateAccountDto)
-                .put("/accounts/{accountId}", "12002")
+                .put("/accounts/{accountId}", 52)
                 .then().log().all()
                 .statusCode(400)
                 .body("messages", containsInAnyOrder("bic Swift size must be between 0 and 250",
@@ -113,10 +111,10 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(updateAccountDto).log().all()
-                .put("/accounts/{accountId}", "12002")
+                .put("/accounts/{accountId}", 52)
                 .then().log().all()
                 .statusCode(200)
-                .body("accountId", equalTo("12002"))
+                .body("accountId", equalTo(52))
                 .body("bicSwift", equalTo(updateAccountDto.getBicSwift()))
                 .body("iban", equalTo(updateAccountDto.getIban()));
     }
@@ -126,13 +124,13 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
 
         RestAssured
                 .given()
-                .get("/accounts/{accountId}", "12001")
+                .get("/accounts/{accountId}", 51)
                 .then().log().all()
                 .statusCode(200)
-                .body("accountId", equalTo("12001"))
+                .body("accountId", equalTo(51))
                 .body("bicSwift", equalTo("ABCLKENA"))
                 .body("iban", equalTo("KE2110001"))
-                .body("clientId", equalTo("61894943737"));
+                .body("cards[0].cardId", equalTo(71));
     }
 
 
@@ -163,11 +161,11 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
 
         RestAssured
                 .given()
-                .get("/accounts/{accountId}/cards", "12002")
+                .get("/accounts/{accountId}/cards", 52)
                 .then().log().all()
                 .statusCode(200)
                 .body("content.size()", greaterThanOrEqualTo(2))
-                .body("content[0].account.accountId", equalTo("12002"));
+                .body("content[0].account.accountId", equalTo(52));
     }
 
     @Test
@@ -175,19 +173,19 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
 
         RestAssured
                 .given()
-                .get("/accounts/{accountId}", "12003")
+                .get("/accounts/{accountId}", 53)
                 .then()
                 .statusCode(200);
 
         RestAssured
                 .given()
-                .delete("/accounts/{accountId}", "12003")
+                .delete("/accounts/{accountId}", 53)
                 .then()
                 .statusCode(200);
 
         RestAssured
                 .given()
-                .get("/accounts/{accountId}", "12003")
+                .get("/accounts/{accountId}", 53)
                 .then().log().all()
                 .statusCode(400)
                 .body(containsString("Account does not exist"));
@@ -195,14 +193,14 @@ public class AccountRestControllerTests extends CardServicesApplicationTests {
         //associated cards were also deleted
         RestAssured
                 .given()
-                .get("/cards/{cardId}", "808002")
+                .get("/cards/{cardId}", 72)
                 .then()
                 .statusCode(400)
                 .body(containsString("Card not found"));
 
         RestAssured
                 .given()
-                .get("/cards/{cardId}", "808003")
+                .get("/cards/{cardId}", 73)
                 .then()
                 .statusCode(400)
                 .body(containsString("Card not found"));

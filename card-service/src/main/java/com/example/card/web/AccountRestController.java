@@ -44,7 +44,7 @@ public class AccountRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "20O", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.ACCOUNT_OK_RESPONSE)))
     })
-    public Account updateAccount(@PathVariable @Parameter(example = "12002") String accountId,
+    public Account updateAccount(@PathVariable @Parameter(example = "2") Long accountId,
                                  @RequestBody @Valid UpdateAccountDto updateAccountDto) {
         return accountService.updateAccount(accountId, updateAccountDto);
     }
@@ -55,7 +55,7 @@ public class AccountRestController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.ACCOUNTS_OK_RESPONSE)))
     })
     @PageableAsQueryParam
-    public Page<Account> getAccounts(@RequestParam(value = "clientId", required = false) String clientId,
+    public Page<Account> getAccounts(@RequestParam(value = "clientId", required = false) Long clientId,
                                      @Parameter(hidden = true) Pageable pageable) {
         return accountService.getAccounts(clientId, pageable);
     }
@@ -65,7 +65,7 @@ public class AccountRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.ACCOUNT_OK_RESPONSE)))
     })
-    public Account getAccount(@PathVariable @Parameter(example = "12001") String accountId) {
+    public Account getAccount(@PathVariable @Parameter(example = "1") Long accountId) {
         return accountService.getAccount(accountId);
     }
 
@@ -75,7 +75,7 @@ public class AccountRestController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.CARDS_OK_RESPONSE)))
     })
     @PageableAsQueryParam
-    public Page<Card> getCards(@PathVariable(value = "accountId") @Parameter(example = "12001") String accountId,
+    public Page<Card> getCards(@PathVariable(value = "accountId") @Parameter(example = "1") Long accountId,
                                @Parameter(hidden = true) Pageable pageable) {
 
         return cardService.getCards(accountId, pageable);
@@ -86,7 +86,7 @@ public class AccountRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "200", description = "OK")
     })
-    public void deleteAccount(@PathVariable  @Parameter(example = "12003") String accountId) {
+    public void deleteAccount(@PathVariable  @Parameter(example = "12003") Long accountId) {
         accountService.deleteAccount(accountId);
     }
 }

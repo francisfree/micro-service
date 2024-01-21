@@ -21,7 +21,6 @@ public class CreateCardDto {
     @NotNull
     private CardType type;
 
-    @NotBlank
-    @Size(max = 250)
-    private String accountId;
+    @NotNull
+    private Long accountId;
 }

@@ -1,4 +1,3 @@
-D:\home\micro-services\card-service\src\main\java\com\example\card\repository\CounterRepository.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\web\CardRestController.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\service\CardServiceImpl.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\repository\CardRepository.java
@@ -7,12 +6,16 @@ D:\home\micro-services\card-service\src\main\java\com\example\card\dto\CreateAcc
 D:\home\micro-services\card-service\src\main\java\com\example\card\dto\CreateCardDto.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\config\PageImplJacksonSerializer.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\entity\AbstractAuditableEntity.java
+D:\home\micro-services\card-service\src\main\java\com\example\card\service\ClientService.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\dto\UpdateAccountDto.java
+D:\home\micro-services\card-service\src\main\java\com\example\card\web\ClientRestController.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\repository\AccountRepository.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\config\exception\dto\AppResponse.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\config\Translator.java
-D:\home\micro-services\card-service\src\main\java\com\example\card\service\CounterServiceImpl.java
+D:\home\micro-services\card-service\src\main\java\com\example\card\entity\Client.java
+D:\home\micro-services\card-service\src\main\java\com\example\card\repository\ClientRepository.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\web\AccountRestController.java
+D:\home\micro-services\card-service\src\main\java\com\example\card\service\ClientServiceImpl.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\entity\Card.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\service\AccountServiceImpl.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\service\CardService.java
@@ -21,13 +24,11 @@ D:\home\micro-services\card-service\src\main\java\com\example\card\utils\CaseCon
 D:\home\micro-services\card-service\src\main\java\com\example\card\utils\runner\BootstrapRunner.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\config\exception\dto\ErrorResponse.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\service\AccountService.java
-D:\home\micro-services\card-service\src\main\java\com\example\card\datatypes\CounterType.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\docs\Examples.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\entity\Account.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\CardServicesApplication.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\config\exception\RestExceptionHandler.java
+D:\home\micro-services\card-service\src\main\java\com\example\card\dto\CreateClientDto.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\dto\UpdateCardDto.java
-D:\home\micro-services\card-service\src\main\java\com\example\card\entity\Counter.java
-D:\home\micro-services\card-service\src\main\java\com\example\card\service\CounterService.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\utils\views\BaseView.java
 D:\home\micro-services\card-service\src\main\java\com\example\card\config\AuditingConfig.java

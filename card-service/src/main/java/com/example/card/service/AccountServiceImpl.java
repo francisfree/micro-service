@@ -1,9 +1,9 @@
 package com.example.card.service;
 
-import com.example.card.datatypes.CounterType;
 import com.example.card.dto.CreateAccountDto;
 import com.example.card.dto.UpdateAccountDto;
 import com.example.card.entity.Account;
+import com.example.card.entity.Client;
 import com.example.card.repository.AccountRepository;
 import com.example.card.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,30 +18,25 @@ import org.springframework.util.ObjectUtils;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
-    private final CounterService counterService;
+    private final ClientService clientService;
     private final AccountRepository accountRepository;
     private final CardRepository cardRepository;
 
     @Override
     public Account createAccount(CreateAccountDto createAccountDto) {
-        String accountId = String.valueOf(counterService.getNextCounter(CounterType.Account));
 
-        if (accountRepository.findByAccountIdIgnoreCase(accountId).isPresent()) {
-            log.warn("create account :: accountId {} already exist ", accountId);
-            throw new IllegalArgumentException("Account Id already exist");
-        }
+        Client client = clientService.getClient(createAccountDto.getClientId());
 
         Account account = new Account();
-        account.setAccountId(accountId);
         account.setBicSwift(createAccountDto.getBicSwift());
         account.setIban(createAccountDto.getIban());
-        account.setClientId(createAccountDto.getClientId());
+        account.setClient(client);
 
         return accountRepository.save(account);
     }
 
     @Override
-    public Account updateAccount(String accountId, UpdateAccountDto updateAccountDto) {
+    public Account updateAccount(Long accountId, UpdateAccountDto updateAccountDto) {
         Account account = getAccount(accountId);
 
         account.setIban(updateAccountDto.getIban());
@@ -51,23 +46,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccount(String accountId) {
-        return accountRepository.findByAccountIdIgnoreCase(accountId).orElseThrow(() -> new IllegalArgumentException("Account does not exist"));
+    public Account getAccount(Long accountId) {
+        return accountRepository.findByAccountId(accountId).orElseThrow(() -> new IllegalArgumentException("Account does not exist"));
     }
 
     @Override
-    public Page<Account> getAccounts(String clientId, Pageable pageable) {
+    public Page<Account> getAccounts(Long clientId, Pageable pageable) {
 
         //retrieve accounts by clientId if provided
         if (!ObjectUtils.isEmpty(clientId)) {
-            return accountRepository.findByClientId(clientId, pageable);
+            Client client = clientService.getClient(clientId);
+            return accountRepository.findByClient(client, pageable);
         }
 
         return accountRepository.findAll(pageable);
     }
 
     @Override
-    public void deleteAccount(String accountId) {
+    public void deleteAccount(Long accountId) {
         Account account = getAccount(accountId);
 
         //delete cards linked to account

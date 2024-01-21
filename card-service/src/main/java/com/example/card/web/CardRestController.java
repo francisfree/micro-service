@@ -41,7 +41,7 @@ public class CardRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "20O", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.CARD_OK_RESPONSE)))
     })
-    public Card updateCard(@PathVariable @Parameter(example = "808001") String cardId,
+    public Card updateCard(@PathVariable @Parameter(example = "1") Long cardId,
                            @RequestBody @Valid UpdateCardDto updateCardDto) {
         return cardService.updateCard(cardId, updateCardDto);
     }
@@ -52,7 +52,7 @@ public class CardRestController {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.CARDS_OK_RESPONSE)))
     })
     @PageableAsQueryParam
-    public Page<Card> getCards(@RequestParam(value = "accountId", required = false) String accountId,
+    public Page<Card> getCards(@RequestParam(value = "accountId", required = false) Long accountId,
                                @Parameter(hidden = true) Pageable pageable) {
         return cardService.getCards(accountId, pageable);
     }
@@ -62,7 +62,7 @@ public class CardRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = "application/json", schema = @Schema(example = Examples.CARD_OK_RESPONSE)))
     })
-    public Card getCard(@PathVariable @Parameter(example = "808005") String cardId) {
+    public Card getCard(@PathVariable @Parameter(example = "5") Long cardId) {
         return cardService.getCard(cardId);
     }
 
@@ -71,7 +71,7 @@ public class CardRestController {
     @Operation(responses = {
             @ApiResponse(responseCode = "200", description = "OK")
     })
-    public void deleteCard(@PathVariable @Parameter(example = "808004") String cardId) {
+    public void deleteCard(@PathVariable @Parameter(example = "4") Long cardId) {
         cardService.deleteCard(cardId);
     }
 }

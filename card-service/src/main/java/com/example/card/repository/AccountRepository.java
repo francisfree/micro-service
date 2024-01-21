@@ -1,6 +1,7 @@
 package com.example.card.repository;
 
 import com.example.card.entity.Account;
+import com.example.card.entity.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import java.util.Optional;
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    Optional<Account> findByAccountIdIgnoreCase(String accountId);
+    Optional<Account> findByAccountId(Long accountId);
 
-    Page<Account> findByClientId(String clientId, Pageable pageable);
+    Page<Account> findByClient(Client client, Pageable pageable);
 }

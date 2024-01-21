@@ -10,11 +10,11 @@ public interface CardService {
 
     Card createCard(CreateCardDto createCardDto);
 
-    Card updateCard(String cardId, UpdateCardDto updateCardDto);
+    Card updateCard(Long cardId, UpdateCardDto updateCardDto);
 
-    Card getCard(String cardId);
+    Card getCard(Long cardId);
 
-    Page<Card> getCards(String accountId, Pageable pageable);
+    Page<Card> getCards(Long accountId, Pageable pageable);
 
-    void deleteCard(String cardId);
+    void deleteCard(Long cardId);
 }

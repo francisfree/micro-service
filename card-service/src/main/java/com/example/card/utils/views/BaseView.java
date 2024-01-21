@@ -9,4 +9,6 @@ public interface BaseView {
     interface CardDetailedView extends BaseEntityDetailedView {}
 
     interface AccountDetailedView extends BaseEntityDetailedView {}
+
+    interface ClientDetailedView extends BaseEntityDetailedView {}
 }

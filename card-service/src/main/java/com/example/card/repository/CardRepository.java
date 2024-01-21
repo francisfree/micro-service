@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface CardRepository extends JpaRepository<Card, Long> {
 
-    Optional<Card> findByCardIdIgnoreCase(String CardId);
+    Optional<Card> findByCardId(Long cardId);
 
     Page<Card> findByAccount(Account account, Pageable pageable);
 

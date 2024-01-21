@@ -10,11 +10,11 @@ public interface AccountService {
 
     Account createAccount(CreateAccountDto createAccountDto);
 
-    Account updateAccount(String accountId, UpdateAccountDto updateAccountDto);
+    Account updateAccount(Long accountId, UpdateAccountDto updateAccountDto);
 
-    Account getAccount(String accountId);
+    Account getAccount(Long accountId);
 
-    Page<Account> getAccounts(String clientId, Pageable pageable);
+    Page<Account> getAccounts(Long clientId, Pageable pageable);
 
-    void deleteAccount(String accountId);
+    void deleteAccount(Long accountId);
 }

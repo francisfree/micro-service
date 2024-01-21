@@ -25,12 +25,6 @@ import java.util.UUID;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class AbstractAuditableEntity implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false, updatable = false)
-    private Long id;
-
     @Column(name = "public_id", updatable = false)
     @JsonView({BaseView.BaseEntityListView.class})
     private UUID publicId;

@@ -17,9 +17,11 @@ import org.hibernate.annotations.SQLRestriction;
 @SQLRestriction(value = "deleted = false")
 public class Card extends AbstractAuditableEntity {
 
-    @Column(name = "card_id", updatable = false, nullable = false, unique = true)
-    @JsonView({BaseView.AccountDetailedView.class, BaseView.CardDetailedView.class})
-    private String cardId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "card_id", nullable = false, updatable = false)
+    @JsonView({BaseView.BaseEntityDetailedView.class})
+    private Long cardId;
 
     @Column(name = "card_alias", nullable = false)
     @JsonView({BaseView.AccountDetailedView.class, BaseView.CardDetailedView.class})
@@ -31,7 +33,7 @@ public class Card extends AbstractAuditableEntity {
     private CardType type;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id", updatable = false, nullable = false)
+    @JoinColumn(name = "account_id", referencedColumnName = "account_id", updatable = false, nullable = false)
     @JsonView({BaseView.CardDetailedView.class})
     private Account account;
 }

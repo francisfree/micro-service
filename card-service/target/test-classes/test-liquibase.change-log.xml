@@ -9,14 +9,4 @@
 
     <include file="/db/changelog/liquibase.change-log.xml"/>
 
-    <changeSet id="202104161131" author="francis">
-        <createSequence sequenceName="hibernate_sequence"
-                        cycle="false"
-                        startValue="1"
-                        incrementBy="1"
-                        maxValue="9223372036854775807"
-                        schemaName="public"
-                        minValue="1"/>
-    </changeSet>
-
 </databaseChangeLog>

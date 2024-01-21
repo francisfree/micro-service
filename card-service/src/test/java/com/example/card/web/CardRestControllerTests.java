@@ -22,7 +22,7 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
         createCardDto = new CreateCardDto();
         createCardDto.setType(CardType.Virtual);
         createCardDto.setAlias("John Doe");
-        createCardDto.setAccountId("12001");
+        createCardDto.setAccountId(54L);
 
         updateCardDto = new UpdateCardDto();
         updateCardDto.setAlias("Jane Doe");
@@ -45,7 +45,6 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
     @Test
     public void createCardFailsWhenInvalidLengths() {
         createCardDto.setAlias(RandomStringUtils.randomAlphabetic(300));
-        createCardDto.setAccountId(RandomStringUtils.randomAlphabetic(300));
 
         RestAssured
                 .given()
@@ -54,8 +53,7 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
                 .post("/cards")
                 .then().log().all()
                 .statusCode(400)
-                .body("messages", containsInAnyOrder("alias size must be between 0 and 250",
-                        "account Id size must be between 0 and 250"));
+                .body("messages", containsInAnyOrder("alias size must be between 0 and 250"));
     }
 
     @Test
@@ -70,7 +68,7 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
                 .body("cardId", notNullValue())
                 .body("type", equalTo(createCardDto.getType().name()))
                 .body("alias", equalTo(createCardDto.getAlias()))
-                .body("account.accountId", equalTo(createCardDto.getAccountId()));
+                .body("account.accountId", equalTo(54));
     }
 
     @Test
@@ -81,7 +79,7 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(updateCardDto)
-                .put("/cards/{accountId}", "808002")
+                .put("/cards/{accountId}", 72)
                 .then().log().all()
                 .statusCode(400)
                 .body(containsString("must not be blank"));
@@ -95,7 +93,7 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(updateCardDto)
-                .put("/cards/{accountId}", "808002")
+                .put("/cards/{accountId}", 72)
                 .then().log().all()
                 .statusCode(400)
                 .body("messages", containsInAnyOrder("alias size must be between 0 and 250"));
@@ -108,10 +106,10 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
                 .given()
                 .contentType(ContentType.JSON)
                 .body(updateCardDto).log().all()
-                .put("/cards/{accountId}", "808005")
+                .put("/cards/{accountId}", 75)
                 .then().log().all()
                 .statusCode(200)
-                .body("cardId", equalTo("808005"))
+                .body("cardId", equalTo(75))
                 .body("type", equalTo(CardType.Physical.name()))
                 .body("alias", equalTo(updateCardDto.getAlias()));
     }
@@ -121,13 +119,13 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
 
         RestAssured
                 .given()
-                .get("/cards/{cardId}", "808001")
+                .get("/cards/{cardId}", 71)
                 .then().log().all()
                 .statusCode(200)
-                .body("cardId", equalTo("808001"))
+                .body("cardId", equalTo(71))
                 .body("type", equalTo(CardType.Virtual.name()))
                 .body("alias", equalTo("Ken Doe"))
-                .body("account.accountId", equalTo("12001"));
+                .body("account.accountId", equalTo(51));
     }
 
     @Test
@@ -157,20 +155,20 @@ public class CardRestControllerTests extends CardServicesApplicationTests {
 
         RestAssured
                 .given()
-                .get("/cards/{cardId}", "808004")
+                .get("/cards/{cardId}", 74)
                 .then()
                 .statusCode(200);
 
         RestAssured
                 .given()
-                .delete("/cards/{cardId}", "808004")
+                .delete("/cards/{cardId}", 74)
                 .then().log().all()
                 .statusCode(200);
 
         RestAssured
                 .given()
-                .get("/cards/{cardId}", "808004")
-                .then().log().all()
+                .get("/cards/{cardId}", 74)
+                .then()
                 .statusCode(400)
                 .body(containsString("Card not found"));
     }

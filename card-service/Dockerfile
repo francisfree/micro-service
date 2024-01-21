@@ -8,5 +8,4 @@ RUN addgroup --system -g 2000 javauser && adduser -S -s /usr/sbin/nologin -G jav
 COPY target/*.jar /opt/app/app.jar
 RUN chown -R javauser:javauser .
 USER javauser
-EXPOSE 18080
 ENTRYPOINT ["java","-jar","app.jar"]

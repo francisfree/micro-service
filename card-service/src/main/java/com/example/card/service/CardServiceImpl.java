@@ -1,6 +1,5 @@
 package com.example.card.service;
 
-import com.example.card.datatypes.CounterType;
 import com.example.card.dto.CreateCardDto;
 import com.example.card.dto.UpdateCardDto;
 import com.example.card.entity.Account;
@@ -17,24 +16,15 @@ import org.springframework.util.ObjectUtils;
 @Service
 @AllArgsConstructor
 public class CardServiceImpl implements CardService {
-    
-    private final CounterService counterService;
+
     private final CardRepository cardRepository;
     private final AccountService accountService;
 
     @Override
     public Card createCard(CreateCardDto createCardDto) {
-        String cardId = String.valueOf(counterService.getNextCounter(CounterType.Card));
-
-        if (cardRepository.findByCardIdIgnoreCase(cardId).isPresent()) {
-            log.warn("create card :: cardId {} already exist ", cardId);
-            throw new IllegalArgumentException("Card Id already exist");
-        }
-
         Account account = accountService.getAccount(createCardDto.getAccountId());
 
         Card card = new Card();
-        card.setCardId(cardId);
         card.setAlias(createCardDto.getAlias());
         card.setType(createCardDto.getType());
         card.setAccount(account);
@@ -43,7 +33,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Card updateCard(String cardId, UpdateCardDto updateCardDto) {
+    public Card updateCard(Long cardId, UpdateCardDto updateCardDto) {
         Card card = getCard(cardId);
 
         card.setAlias(updateCardDto.getAlias());
@@ -52,12 +42,12 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Card getCard(String cardId) {
-        return cardRepository.findByCardIdIgnoreCase(cardId).orElseThrow(() -> new IllegalArgumentException("Card not found"));
+    public Card getCard(Long cardId) {
+        return cardRepository.findByCardId(cardId).orElseThrow(() -> new IllegalArgumentException("Card not found"));
     }
 
     @Override
-    public Page<Card> getCards(String accountId, Pageable pageable) {
+    public Page<Card> getCards(Long accountId, Pageable pageable) {
         //return cards associated to an accountId
         if (!ObjectUtils.isEmpty(accountId)) {
             Account account = accountService.getAccount(accountId);
@@ -68,7 +58,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public void deleteCard(String cardId) {
+    public void deleteCard(Long cardId) {
         Card card = getCard(cardId);
 
         card.setDeleted(true);

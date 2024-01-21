@@ -11,11 +11,11 @@
     <changeSet id="2024-01-20 09:00" author="francis">
         <preConditions>
             <not>
-                <tableExists tableName="counters" schemaName="public"/>
+                <tableExists tableName="clients" schemaName="public"/>
             </not>
         </preConditions>
-        <createTable tableName="counters" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
+        <createTable tableName="clients" schemaName="public">
+            <column name="client_id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="public_id" type="uuid">
@@ -36,10 +36,7 @@
             <column name="deleted" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
-            <column name="counter_type" type="varchar(250)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="counter_current" type="bigint">
+            <column name="client_name" type="varchar(250)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -52,7 +49,7 @@
             </not>
         </preConditions>
         <createTable tableName="accounts" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="account_id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="public_id" type="uuid">
@@ -73,17 +70,14 @@
             <column name="deleted" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
-            <column name="account_id" type="varchar(250)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="unique_account_id_table_accounts"/>
-            </column>
             <column name="iban" type="varchar(250)">
                 <constraints nullable="false"/>
             </column>
             <column name="bic_swift" type="varchar(250)">
                 <constraints nullable="false"/>
             </column>
-            <column name="client_id" type="varchar(250)">
-                <constraints nullable="false"/>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false" referencedColumnNames="client_id" referencedTableName="clients" foreignKeyName="fk_client_id_table_accounts"/>
             </column>
         </createTable>
     </changeSet>
@@ -95,7 +89,7 @@
             </not>
         </preConditions>
         <createTable tableName="cards" schemaName="public">
-            <column name="id" type="bigint" autoIncrement="true">
+            <column name="card_id" type="bigint" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="public_id" type="uuid">
@@ -116,9 +110,6 @@
             <column name="deleted" type="boolean" defaultValueBoolean="false">
                 <constraints nullable="false"/>
             </column>
-            <column name="card_id" type="varchar(250)">
-                <constraints nullable="false" unique="true" uniqueConstraintName="unique_card_id_table_cards"/>
-            </column>
             <column name="card_alias" type="varchar(250)">
                 <constraints nullable="false"/>
             </column>
@@ -126,7 +117,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="account_id" type="bigint">
-                <constraints nullable="false" referencedColumnNames="id" referencedTableName="accounts" foreignKeyName="fk_account_id_table_cards"/>
+                <constraints nullable="false" referencedColumnNames="account_id" referencedTableName="accounts" foreignKeyName="fk_account_id_table_cards"/>
             </column>
         </createTable>
     </changeSet>

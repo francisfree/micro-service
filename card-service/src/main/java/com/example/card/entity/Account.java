@@ -2,10 +2,7 @@ package com.example.card.entity;
 
 import com.example.card.utils.views.BaseView;
 import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLRestriction;
 
@@ -20,9 +17,11 @@ import java.util.List;
 @SQLRestriction(value = "deleted = false")
 public class Account extends AbstractAuditableEntity {
 
-    @Column(name = "account_id", nullable = false, updatable = false, unique = true)
-    @JsonView({BaseView.AccountDetailedView.class, BaseView.CardDetailedView.class})
-    private String accountId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id", nullable = false, updatable = false)
+    @JsonView({BaseView.BaseEntityDetailedView.class})
+    private Long accountId;
 
     @Column(name = "iban", nullable = false)
     @JsonView({BaseView.AccountDetailedView.class, BaseView.CardDetailedView.class})
@@ -32,9 +31,10 @@ public class Account extends AbstractAuditableEntity {
     @JsonView({BaseView.AccountDetailedView.class, BaseView.CardDetailedView.class})
     private String bicSwift;
 
-    @Column(name = "client_id", nullable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "client_id", referencedColumnName = "client_id", updatable = false, nullable = false)
     @JsonView({BaseView.AccountDetailedView.class, BaseView.CardDetailedView.class})
-    private String clientId;
+    private Client client;
 
     @OneToMany(mappedBy = "account")
     @JsonView({BaseView.AccountDetailedView.class})
