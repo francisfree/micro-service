@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+   http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.14.xsd">
+
+    <changeSet id="2024-01-20 09:00" author="francis">
+        <preConditions>
+            <not>
+                <tableExists tableName="clients" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="clients" schemaName="public">
+            <column name="client_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_modified" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_name" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2024-01-20 09:01" author="francis">
+        <preConditions>
+            <not>
+                <tableExists tableName="accounts" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="accounts" schemaName="public">
+            <column name="account_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_modified" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="iban" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="bic_swift" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="bigint">
+                <constraints nullable="false" referencedColumnNames="client_id" referencedTableName="clients" foreignKeyName="fk_client_id_table_accounts"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2024-01-20 09:02" author="francis">
+        <preConditions>
+            <not>
+                <tableExists tableName="cards" schemaName="public"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cards" schemaName="public">
+            <column name="card_id" type="bigint" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="public_id" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_created" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_modified" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="modified_by" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="card_alias" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="card_type" type="varchar(250)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="bigint">
+                <constraints nullable="false" referencedColumnNames="account_id" referencedTableName="accounts" foreignKeyName="fk_account_id_table_cards"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

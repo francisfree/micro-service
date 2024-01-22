@@ -19,7 +19,7 @@ services:
 
   card_service:
     build:
-      context: card-service
+      context: .
       dockerfile: Dockerfile
     image: card_service:latest
     container_name: card_services

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <delete file="D:\home\card-service\target\classes/application-local.properties" />
+    <delete file="D:\home\card-service\target\classes/application.properties" />
+    <copy file="src/main/resources/application-uat.properties" tofile="D:\home\card-service\target\classes/application.properties" />
+    <delete file="D:\home\card-service\target\classes/application-uat.properties" />
+  </target>
+</project>
